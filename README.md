@@ -41,38 +41,36 @@ dotnet run --project src/CarLookup.Host/CarLookup.Host.csproj
 ### Database Setup
 The database is automatically created and seeded with sample data during development when the application starts. This behavior is controlled by the `Data:SeedOnStartup` setting in your configuration (defaults to `true` in development).
 
-## API Endpoints
-
-### Authentication
-- `POST`	`/api/v1/Auth/token`	-	Authenticate user and generate JWT token
-
-### Car Makes
-> <sub>Reader role (or above)</sub>
-- `GET` `/api/v1/carmakes`	-	Get all car makes with pagination and filtering
-- `GET` `/api/v1/carmakes/{carMakeId}`	-	Get a specific car make by ID
-- `GET` `/api/v1/carmakes/{carMakeId}/carmodels`	-	Get car models for a specific car make
-> <sub>Editor role (or above)</sub>
-- `POST` `/api/v1/carmakes`	-	Create a new car make
-- `PUT` `/api/v1/carmakes/{carMakeId}`	-	Update an existing car make
-> <sub>Admin role</sub>
-- `DELETE` `/api/v1/carmakes/{carMakeId}`	-	Delete a car make
-
-### Car Models
-> <sub>Reader role (or above)</sub>
-- `GET` `/api/v1/carmodels/{carModelId}`	-	Get a specific car model by ID
-> <sub>Editor role (or above)</sub>
-- `POST` `/api/v1/carmodels`	-	Create a new car model
-- `PUT` `/api/v1/carmodels/{carModelId}`	-	Update an existing car model
-> <sub>Admin role</sub>
-- `DELETE` `/api/v1/carmodels/{carModelId}`	-	Delete a car model
-
 ## Authentication & Authorization
-
 The API uses JWT Bearer token authentication. Tokens can be obtained from the `/api/v1/auth/token` endpoint. The system implements role-based authorization with three levels:
 
 - **Admin**: Full access to all endpoints
 - **Editor**: Can read all data and create/update makes and models
 - **Reader**: Read-only access to all data
+
+## API Endpoints
+### Authentication
+- `POST`	`/api/v1/Auth/token`	-	Authenticate user and generate JWT token
+
+### Car Makes
+> <sub>Role: Reader (or above)</sub>
+- `GET` `/api/v1/carmakes`	-	Get all car makes with pagination and filtering
+- `GET` `/api/v1/carmakes/{carMakeId}`	-	Get a specific car make by ID
+- `GET` `/api/v1/carmakes/{carMakeId}/carmodels`	-	Get car models for a specific car make
+> <sub>Role: Editor (or above)</sub>
+- `POST` `/api/v1/carmakes`	-	Create a new car make
+- `PUT` `/api/v1/carmakes/{carMakeId}`	-	Update an existing car make
+> <sub>Role: Admin</sub>
+- `DELETE` `/api/v1/carmakes/{carMakeId}`	-	Delete a car make
+
+### Car Models
+> <sub>Role: Reader (or above)</sub>
+- `GET` `/api/v1/carmodels/{carModelId}`	-	Get a specific car model by ID
+> <sub>Role: Editor (or above)</sub>
+- `POST` `/api/v1/carmodels`	-	Create a new car model
+- `PUT` `/api/v1/carmodels/{carModelId}`	-	Update an existing car model
+> <sub>Role: Admin</sub>
+- `DELETE` `/api/v1/carmodels/{carModelId}`	-	Delete a car model
 
 ## Testing
 The project includes testing:
