@@ -54,8 +54,9 @@ jobs:
     #- name: Run Integration Tests
     #  run: dotnet test tests/CarLookup.Tests.Integration/CarLookup.Tests.Integration.csproj --no-build --configuration Release --verbosity normal --logger trx --results-directory TestResults/Integration
 
-    - name: Run Acceptance Tests
-      run: dotnet test tests/CarLookup.Tests.Acceptance/CarLookup.Tests.Acceptance.csproj --no-build --configuration Release --verbosity normal --logger trx --results-directory TestResults/Acceptance
+    # TODO: Adapt Acceptance Tests to run on Github Actions pipeline
+    #- name: Run Acceptance Tests
+    #  run: dotnet test tests/CarLookup.Tests.Acceptance/CarLookup.Tests.Acceptance.csproj --no-build --configuration Release --verbosity normal --logger trx --results-directory TestResults/Acceptance
 
     - name: Publish Test Results
       uses: dorny/test-reporter@v1
