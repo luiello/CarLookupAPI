@@ -16,7 +16,7 @@ env:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         dotnet-version: ['9.0.x']
@@ -58,45 +58,40 @@ jobs:
     #- name: Run Acceptance Tests
     #  run: dotnet test tests/CarLookup.Tests.Acceptance/CarLookup.Tests.Acceptance.csproj --no-build --configuration Release --verbosity normal --logger trx --results-directory TestResults/Acceptance
     
-    - name: Publish Test Results
-      uses: EnricoMi/publish-unit-test-result-action/windows@v2
-      if: always()  # run this step even if previous step failed
+    - name: Combine Coverage Reports
+      uses: danielpalme/ReportGenerator-GitHub-Action@e15fac9a0be12d67bc1edd3a7b379b298cc186f5
       with:
-        files: TestResults/**/*.trx
-        check_name: "Test Results (.NET ${{ matrix.dotnet-version }})"
-        fail_on: "test failures"
+        reports: "**/*.cobertura.xml" 
+        targetdir: "${{ github.workspace }}"
+        reporttypes: "Cobertura"
+        verbosity: "Info"
+        title: "Code Coverage"
+        tag: "${{ github.run_number }}_${{ github.run_id }}"
+        customSettings: "" 
+        toolpath: "reportgeneratortool" # Default directory for installing the dotnet tool.
 
-    - name: Upload test results
+    - name: Upload Combined Coverage XML
       uses: actions/upload-artifact@v4
-      if: always()
       with:
-        name: test-results-${{ matrix.dotnet-version }}
-        path: TestResults/
-        retention-days: 7
+        name: coverage
+        path: ${{ github.workspace }}/Cobertura.xml
+        retention-days: 5
 
-    - name: Test Summary
-      if: always()
-      run: |
-        echo "## Test Results Summary" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        
-        if find TestResults -name "*.trx" -type f | head -1 | grep -q .; then
-          echo "✅ Test results generated successfully" >> $GITHUB_STEP_SUMMARY
-          
-          # Count test files
-          UNIT_TESTS=$(find TestResults/Unit -name "*.trx" 2>/dev/null | wc -l || echo "0")
-          INTEGRATION_TESTS=$(find TestResults/Integration -name "*.trx" 2>/dev/null | wc -l || echo "0")
-          ACCEPTANCE_TESTS=$(find TestResults/Acceptance -name "*.trx" 2>/dev/null | wc -l || echo "0")
-          
-          echo "- Unit test files: $UNIT_TESTS" >> $GITHUB_STEP_SUMMARY
-          echo "- Integration test files: $INTEGRATION_TESTS" >> $GITHUB_STEP_SUMMARY  
-          echo "- Acceptance test files: $ACCEPTANCE_TESTS" >> $GITHUB_STEP_SUMMARY
-        else
-          echo "❌ No test results found" >> $GITHUB_STEP_SUMMARY
-        fi
-
+    - name: Publish Code Coverage Report
+      uses: irongut/CodeCoverageSummary@v1.3.1
+      with:
+        filename: "Cobertura.xml"
+        badge: true
+        fail_below_min: false # just informative for now
+        format: markdown
+        hide_branch_rate: false
+        hide_complexity: false
+        indicators: true
+        output: both
+        thresholds: "10 30"        
+    
   security-scan:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     needs: build
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     
