@@ -44,21 +44,27 @@ The database is automatically created and seeded with sample data during develop
 ## API Endpoints
 
 ### Authentication
-- `POST /api/v1/auth/token` - Obtain JWT token for authentication
+- `POST`	`/api/v1/Auth/token`	-	Authenticate user and generate JWT token
 
 ### Car Makes
-- `GET /api/v1/carmakes` - List all car makes (paginated)
-- `GET /api/v1/carmakes/{id}` - Get car make by ID
-- `POST /api/v1/carmakes` - Create a new car make (Editor+ role)
-- `PUT /api/v1/carmakes/{id}` - Update a car make (Editor+ role)
-- `DELETE /api/v1/carmakes/{id}` - Delete a car make (Admin role)
+> <sub>Reader role (or above)</sub>
+- `GET` `/api/v1/carmakes`	-	Get all car makes with pagination and filtering
+- `GET` `/api/v1/carmakes/{carMakeId}`	-	Get a specific car make by ID
+- `GET` `/api/v1/carmakes/{carMakeId}/carmodels`	-	Get car models for a specific car make
+> <sub>Editor role (or above)</sub>
+- `POST` `/api/v1/carmakes`	-	Create a new car make
+- `PUT` `/api/v1/carmakes/{carMakeId}`	-	Update an existing car make
+> <sub>Admin role</sub>
+- `DELETE` `/api/v1/carmakes/{carMakeId}`	-	Delete a car make
 
 ### Car Models
-- `GET /api/v1/carmakes/{makeId}/models` - List all models for a make (paginated)
-- `GET /api/v1/carmakes/{makeId}/models/{id}` - Get car model by ID
-- `POST /api/v1/carmakes/{makeId}/models` - Create a new car model (Editor+ role)
-- `PUT /api/v1/carmakes/{makeId}/models/{id}` - Update a car model (Editor+ role)
-- `DELETE /api/v1/carmakes/{makeId}/models/{id}` - Delete a car model (Admin role)
+> <sub>Reader role (or above)</sub>
+- `GET` `/api/v1/carmodels/{carModelId}`	-	Get a specific car model by ID
+> <sub>Editor role (or above)</sub>
+- `POST` `/api/v1/carmodels`	-	Create a new car model
+- `PUT` `/api/v1/carmodels/{carModelId}`	-	Update an existing car model
+> <sub>Admin role</sub>
+- `DELETE` `/api/v1/carmodels/{carModelId}`	-	Delete a car model
 
 ## Authentication & Authorization
 
