@@ -16,7 +16,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     strategy:
       matrix:
         dotnet-version: ['9.0.x']
@@ -59,7 +59,7 @@ jobs:
     #  run: dotnet test tests/CarLookup.Tests.Acceptance/CarLookup.Tests.Acceptance.csproj --no-build --configuration Release --verbosity normal --logger trx --results-directory TestResults/Acceptance
     
     - name: Publish Test Results
-      uses: EnricoMi/publish-unit-test-result-action/linux@v2
+      uses: EnricoMi/publish-unit-test-result-action/windows@v2
       if: always()  # run this step even if previous step failed
       with:
         files: TestResults/**/*.trx
@@ -96,7 +96,7 @@ jobs:
         fi
 
   security-scan:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     needs: build
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     
