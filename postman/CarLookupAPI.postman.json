@@ -1,0 +1,2591 @@
+{
+    "info": {
+        "name": "CarLookupAPI",
+        "description": "",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Authentication",
+            "description": "",
+            "item": [
+                {
+                    "name": "Login as Admin",
+                    "description": "",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "// Parse the response",
+                                    "const responseJson = pm.response.json();",
+                                    "",
+                                    "// Test response structure",
+                                    "pm.test(\"Status code is 200\", function () {",
+                                    "    pm.response.to.have.status(200);",
+                                    "});",
+                                    "",
+                                    "pm.test(\"Response has success flag\", function () {",
+                                    "    pm.expect(responseJson.success).to.be.true;",
+                                    "});",
+                                    "",
+                                    "pm.test(\"Response contains token\", function () {",
+                                    "    pm.expect(responseJson.data).to.have.property('accessToken');",
+                                    "    pm.expect(responseJson.data.accessToken).to.be.a('string');",
+                                    "});",
+                                    "",
+                                    "// Store the token for subsequent requests",
+                                    "if (responseJson.success && responseJson.data && responseJson.data.accessToken) {",
+                                    "    pm.collectionVariables.set(\"admin_token\", responseJson.data.accessToken);",
+                                    "    pm.collectionVariables.set(\"token\", responseJson.data.accessToken);",
+                                    "    console.log(\"Admin token stored successfully\");",
+                                    "} else {",
+                                    "    console.log(\"Failed to extract admin token from response\");",
+                                    "}"
+                                ],
+                                "type": "text/javascript",
+                                "packages": {}
+                            }
+                        }
+                    ],
+                    "auth": {},
+                    "request": {
+                        "auth": {},
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin123\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "description": "",
+                                "type": "string"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/v1/auth/token",
+                            "path": [
+                                "api",
+                                "v1",
+                                "auth",
+                                "token"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json",
+                                        "description": "",
+                                        "disabled": false
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/v1/auth/token",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "auth",
+                                        "token"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin123\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "cookie": []
+                        }
+                    ],
+                    "protocolProfileBehavior": {
+                        "strictSSL": false,
+                        "followRedirects": true
+                    }
+                },
+                {
+                    "name": "Login as Editor",
+                    "description": "",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "// Parse the response",
+                                    "const responseJson = pm.response.json();",
+                                    "",
+                                    "// Test response structure",
+                                    "pm.test(\"Status code is 200\", function () {",
+                                    "    pm.response.to.have.status(200);",
+                                    "});",
+                                    "",
+                                    "pm.test(\"Response has success flag\", function () {",
+                                    "    pm.expect(responseJson.success).to.be.true;",
+                                    "});",
+                                    "",
+                                    "pm.test(\"Response contains token\", function () {",
+                                    "    pm.expect(responseJson.data).to.have.property('accessToken');",
+                                    "    pm.expect(responseJson.data.accessToken).to.be.a('string');",
+                                    "});",
+                                    "",
+                                    "// Store the token for subsequent requests",
+                                    "if (responseJson.success && responseJson.data && responseJson.data.accessToken) {",
+                                    "    pm.collectionVariables.set(\"editor_token\", responseJson.data.accessToken);",
+                                    "    pm.collectionVariables.set(\"token\", responseJson.data.accessToken);",
+                                    "    console.log(\"Editor token stored successfully\");",
+                                    "} else {",
+                                    "    console.log(\"Failed to extract editor token from response\");",
+                                    "}"
+                                ],
+                                "type": "text/javascript",
+                                "packages": {}
+                            }
+                        }
+                    ],
+                    "auth": {},
+                    "request": {
+                        "auth": {},
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"username\": \"editor\",\n    \"password\": \"editor123\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "description": "",
+                                "type": "string"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/v1/auth/token",
+                            "path": [
+                                "api",
+                                "v1",
+                                "auth",
+                                "token"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json",
+                                        "description": "",
+                                        "disabled": false
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/v1/auth/token",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "auth",
+                                        "token"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"username\": \"editor\",\n    \"password\": \"editor123\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "cookie": []
+                        }
+                    ],
+                    "protocolProfileBehavior": {
+                        "strictSSL": false,
+                        "followRedirects": true
+                    }
+                },
+                {
+                    "name": "Login as Reader",
+                    "description": "",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "// Parse the response",
+                                    "const responseJson = pm.response.json();",
+                                    "",
+                                    "// Test response structure",
+                                    "pm.test(\"Status code is 200\", function () {",
+                                    "    pm.response.to.have.status(200);",
+                                    "});",
+                                    "",
+                                    "pm.test(\"Response has success flag\", function () {",
+                                    "    pm.expect(responseJson.success).to.be.true;",
+                                    "});",
+                                    "",
+                                    "pm.test(\"Response contains token\", function () {",
+                                    "    pm.expect(responseJson.data).to.have.property('accessToken');",
+                                    "    pm.expect(responseJson.data.accessToken).to.be.a('string');",
+                                    "});",
+                                    "",
+                                    "// Store the token for subsequent requests",
+                                    "if (responseJson.success && responseJson.data && responseJson.data.accessToken) {",
+                                    "    pm.collectionVariables.set(\"reader_token\", responseJson.data.accessToken);",
+                                    "    pm.collectionVariables.set(\"token\", responseJson.data.accessToken);",
+                                    "    console.log(\"Reader token stored successfully\");",
+                                    "} else {",
+                                    "    console.log(\"Failed to extract reader token from response\");",
+                                    "}"
+                                ],
+                                "type": "text/javascript",
+                                "packages": {}
+                            }
+                        }
+                    ],
+                    "auth": {},
+                    "request": {
+                        "auth": {},
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"username\": \"reader\",\n    \"password\": \"reader123\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "description": "",
+                                "type": "string"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/v1/auth/token",
+                            "path": [
+                                "api",
+                                "v1",
+                                "auth",
+                                "token"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json",
+                                        "description": "",
+                                        "disabled": false
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/v1/auth/token",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "auth",
+                                        "token"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"username\": \"reader\",\n    \"password\": \"reader123\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "cookie": []
+                        }
+                    ],
+                    "protocolProfileBehavior": {
+                        "strictSSL": false,
+                        "followRedirects": true
+                    }
+                },
+                {
+                    "name": "Login with Invalid Credentials",
+                    "description": "",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test(\"Status code is 401 or 400\", function () {",
+                                    "    pm.expect(pm.response.code).to.be.oneOf([400, 401]);",
+                                    "});",
+                                    "",
+                                    "pm.test(\"Response indicates failure\", function () {",
+                                    "    const responseJson = pm.response.json();",
+                                    "    pm.expect(responseJson.success).to.be.false;",
+                                    "});"
+                                ],
+                                "type": "text/javascript",
+                                "packages": {}
+                            }
+                        }
+                    ],
+                    "auth": {},
+                    "request": {
+                        "auth": {},
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"username\": \"invalid\",\n    \"password\": \"invalid123\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "description": "",
+                                "type": "string"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/v1/auth/token",
+                            "path": [
+                                "api",
+                                "v1",
+                                "auth",
+                                "token"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json",
+                                        "description": "",
+                                        "disabled": false
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/v1/auth/token",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "auth",
+                                        "token"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"username\": \"invalid\",\n    \"password\": \"invalid123\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "cookie": []
+                        }
+                    ],
+                    "protocolProfileBehavior": {
+                        "strictSSL": false,
+                        "followRedirects": true
+                    }
+                }
+            ],
+            "event": [
+                {
+                    "listen": "prerequest",
+                    "script": {
+                        "exec": [],
+                        "type": "text/javascript",
+                        "packages": {}
+                    }
+                },
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [],
+                        "type": "text/javascript",
+                        "packages": {}
+                    }
+                }
+            ],
+            "auth": {}
+        },
+        {
+            "name": "Car Makes",
+            "description": "",
+            "item": [
+                {
+                    "name": "Get All Car",
+                    "description": "",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test(\"Status code is 200\", function () {",
+                                    "    pm.response.to.have.status(200);",
+                                    "});",
+                                    "",
+                                    "const responseJson = pm.response.json();",
+                                    "",
+                                    "pm.test(\"Response has pagination structure\", function () {",
+                                    "    pm.expect(responseJson).to.have.property('data');",
+                                    "    pm.expect(responseJson).to.have.property('pagination');",
+                                    "    pm.expect(responseJson.pagination).to.have.property('pageNumber');",
+                                    "    pm.expect(responseJson.pagination).to.have.property('pageSize');",
+                                    "    pm.expect(responseJson.pagination).to.have.property('totalCount');",
+                                    "});",
+                                    "",
+                                    "// Store a car make ID for subsequent tests if available",
+                                    "if (responseJson.data && responseJson.data.length > 0) {",
+                                    "    pm.collectionVariables.set(\"existing_car_make_id\", responseJson.data[0].makeId);",
+                                    "    pm.collectionVariables.set(\"existing_car_make_name\", responseJson.data[0].name);",
+                                    "    console.log(\"Stored existing car make ID: \" + responseJson.data[0].makeId);",
+                                    "}"
+                                ],
+                                "type": "text/javascript",
+                                "packages": {}
+                            }
+                        }
+                    ],
+                    "auth": {},
+                    "request": {
+                        "auth": {
+                            "type": "inherit",
+                            "inherit": []
+                        },
+                        "method": "GET",
+                        "body": {},
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/v1/carmakes",
+                            "path": [
+                                "api",
+                                "v1",
+                                "carmakes"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [
+                                {
+                                    "key": "pageNumber",
+                                    "value": "1",
+                                    "description": "",
+                                    "type": "string"
+                                },
+                                {
+                                    "key": "pageSize",
+                                    "value": "100",
+                                    "description": "",
+                                    "type": "string"
+                                }
+                            ],
+                            "variable": []
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/v1/carmakes",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "carmakes"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "pageNumber",
+                                            "value": "1",
+                                            "description": "",
+                                            "disabled": false
+                                        },
+                                        {
+                                            "key": "pageSize",
+                                            "value": "10",
+                                            "description": "",
+                                            "disabled": false
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "body": {}
+                            },
+                            "cookie": []
+                        }
+                    ],
+                    "protocolProfileBehavior": {
+                        "strictSSL": false,
+                        "followRedirects": true
+                    }
+                },
+                {
+                    "name": "Get Car Makes with Filter",
+                    "description": "",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test(\"Status code is 200\", function () {",
+                                    "    pm.response.to.have.status(200);",
+                                    "});",
+                                    "",
+                                    "const responseJson = pm.response.json();",
+                                    "",
+                                    "pm.test(\"Response has pagination structure\", function () {",
+                                    "    pm.expect(responseJson).to.have.property('data');",
+                                    "    pm.expect(responseJson).to.have.property('pagination');",
+                                    "});"
+                                ],
+                                "type": "text/javascript",
+                                "packages": {}
+                            }
+                        }
+                    ],
+                    "auth": {},
+                    "request": {
+                        "auth": {
+                            "type": "inherit",
+                            "inherit": []
+                        },
+                        "method": "GET",
+                        "body": {},
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/v1/carmakes",
+                            "path": [
+                                "api",
+                                "v1",
+                                "carmakes"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [
+                                {
+                                    "key": "nameContains",
+                                    "value": "",
+                                    "description": "",
+                                    "type": "string"
+                                },
+                                {
+                                    "key": "page",
+                                    "value": "1",
+                                    "description": "",
+                                    "type": "string"
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "100",
+                                    "description": "",
+                                    "type": "string"
+                                }
+                            ],
+                            "variable": []
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/v1/carmakes",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "carmakes"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "nameContains",
+                                            "value": "Toyota",
+                                            "description": "",
+                                            "disabled": false
+                                        },
+                                        {
+                                            "key": "pageNumber",
+                                            "value": "1",
+                                            "disabled": false
+                                        },
+                                        {
+                                            "key": "pageSize",
+                                            "value": "5",
+                                            "disabled": false
+                                        },
+                                        {
+                                            "key": "page",
+                                            "value": "1",
+                                            "description": "",
+                                            "type": "string"
+                                        },
+                                        {
+                                            "key": "limit",
+                                            "value": "100",
+                                            "description": "",
+                                            "type": "string"
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "body": {}
+                            },
+                            "cookie": []
+                        }
+                    ],
+                    "protocolProfileBehavior": {
+                        "strictSSL": false,
+                        "followRedirects": true
+                    }
+                },
+                {
+                    "name": "Get Car Make By ID",
+                    "description": "",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test(\"Status code is 200 or 404\", function () {",
+                                    "    pm.expect(pm.response.code).to.be.oneOf([200, 404]);",
+                                    "});",
+                                    "",
+                                    "if (pm.response.code === 200) {",
+                                    "    const responseJson = pm.response.json();",
+                                    "    ",
+                                    "    pm.test(\"Response has success flag\", function () {",
+                                    "        pm.expect(responseJson.success).to.be.true;",
+                                    "    });",
+                                    "    ",
+                                    "    pm.test(\"Response contains car make data\", function () {",
+                                    "        pm.expect(responseJson.data).to.have.property('makeId');",
+                                    "        pm.expect(responseJson.data).to.have.property('name');",
+                                    "        pm.expect(responseJson.data).to.have.property('countryOfOrigin');",
+                                    "    });",
+                                    "}"
+                                ],
+                                "type": "text/javascript",
+                                "packages": {}
+                            }
+                        }
+                    ],
+                    "auth": {},
+                    "request": {
+                        "auth": {
+                            "type": "inherit",
+                            "inherit": []
+                        },
+                        "method": "GET",
+                        "body": {},
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/v1/carmakes/{{existing_car_make_id}}",
+                            "path": [
+                                "api",
+                                "v1",
+                                "carmakes",
+                                "{{existing_car_make_id}}"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/v1/carmakes/{{existing_car_make_id}}",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "carmakes",
+                                        "{{existing_car_make_id}}"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "body": {}
+                            },
+                            "cookie": []
+                        }
+                    ],
+                    "protocolProfileBehavior": {
+                        "strictSSL": false,
+                        "followRedirects": true
+                    }
+                },
+                {
+                    "name": "Get Car Models by Car Make ID",
+                    "description": "",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test(\"Status code is 200\", function () {",
+                                    "    pm.response.to.have.status(200);",
+                                    "});",
+                                    "",
+                                    "const responseJson = pm.response.json();",
+                                    "",
+                                    "pm.test(\"Response has pagination structure\", function () {",
+                                    "    pm.expect(responseJson).to.have.property('data');",
+                                    "    pm.expect(responseJson).to.have.property('pagination');",
+                                    "});",
+                                    "",
+                                    "// Store a car model ID for subsequent tests if available",
+                                    "if (responseJson.data && responseJson.data.length > 0) {",
+                                    "    pm.collectionVariables.set(\"existing_car_model_id\", responseJson.data[0].modelId);",
+                                    "    console.log(\"Stored existing car model ID: \" + responseJson.data[0].modelId);",
+                                    "}"
+                                ],
+                                "type": "text/javascript",
+                                "packages": {}
+                            }
+                        }
+                    ],
+                    "auth": {},
+                    "request": {
+                        "auth": {
+                            "type": "inherit",
+                            "inherit": []
+                        },
+                        "method": "GET",
+                        "body": {},
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/v1/carmakes/{{existing_car_make_id}}/carmodels",
+                            "path": [
+                                "api",
+                                "v1",
+                                "carmakes",
+                                "{{existing_car_make_id}}",
+                                "carmodels"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [
+                                {
+                                    "key": "Page",
+                                    "value": "",
+                                    "description": "",
+                                    "type": "string"
+                                },
+                                {
+                                    "key": "Limit",
+                                    "value": "",
+                                    "description": "",
+                                    "type": "string"
+                                }
+                            ],
+                            "variable": []
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/v1/carmakes/{{existing_car_make_id}}/carmodels",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "carmakes",
+                                        "{{existing_car_make_id}}",
+                                        "carmodels"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "pageNumber",
+                                            "value": "1",
+                                            "disabled": false
+                                        },
+                                        {
+                                            "key": "pageSize",
+                                            "value": "10",
+                                            "disabled": false
+                                        },
+                                        {
+                                            "key": "Page",
+                                            "value": "",
+                                            "description": "",
+                                            "type": "string"
+                                        },
+                                        {
+                                            "key": "Limit",
+                                            "value": "",
+                                            "description": "",
+                                            "type": "string"
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "body": {}
+                            },
+                            "cookie": []
+                        }
+                    ],
+                    "protocolProfileBehavior": {
+                        "strictSSL": false,
+                        "followRedirects": true
+                    }
+                },
+                {
+                    "name": "Create Car Make",
+                    "description": "",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test(\"Status code is 201\", function () {",
+                                    "    pm.response.to.have.status(201);",
+                                    "});",
+                                    "",
+                                    "const responseJson = pm.response.json();",
+                                    "",
+                                    "pm.test(\"Response has success flag\", function () {",
+                                    "    pm.expect(responseJson.success).to.be.true;",
+                                    "});",
+                                    "",
+                                    "pm.test(\"Response contains created car make\", function () {",
+                                    "    pm.expect(responseJson.data).to.have.property('makeId');",
+                                    "    pm.expect(responseJson.data).to.have.property('name');",
+                                    "    pm.expect(responseJson.data.name).to.equal('Test Car Make');",
+                                    "});",
+                                    "",
+                                    "// Store the created car make ID for subsequent tests",
+                                    "if (responseJson.data && responseJson.data.makeId) {",
+                                    "    pm.collectionVariables.set(\"created_car_make_id\", responseJson.data.makeId);",
+                                    "    console.log(\"Stored created car make ID: \" + responseJson.data.makeId);",
+                                    "}"
+                                ],
+                                "type": "text/javascript",
+                                "packages": {}
+                            }
+                        }
+                    ],
+                    "auth": {},
+                    "request": {
+                        "auth": {
+                            "type": "inherit",
+                            "inherit": []
+                        },
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"Test Car Make\",\n    \"countryOfOrigin\": \"Test Country\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "description": "",
+                                "type": "string"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/v1/carmakes",
+                            "path": [
+                                "api",
+                                "v1",
+                                "carmakes"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json",
+                                        "description": "",
+                                        "disabled": false
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/v1/carmakes",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "carmakes"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"name\": \"Test Car Make\",\n    \"countryOfOrigin\": \"Test Country\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "cookie": []
+                        }
+                    ],
+                    "protocolProfileBehavior": {
+                        "strictSSL": false,
+                        "followRedirects": true
+                    }
+                },
+                {
+                    "name": "Update Car Make",
+                    "description": "",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test(\"Status code is 200\", function () {",
+                                    "    pm.response.to.have.status(200);",
+                                    "});",
+                                    "",
+                                    "const responseJson = pm.response.json();",
+                                    "",
+                                    "pm.test(\"Response has success flag\", function () {",
+                                    "    pm.expect(responseJson.success).to.be.true;",
+                                    "});",
+                                    "",
+                                    "pm.test(\"Response contains updated car make\", function () {",
+                                    "    pm.expect(responseJson.data).to.have.property('name');",
+                                    "    pm.expect(responseJson.data.name).to.equal('Updated Test Car Make');",
+                                    "});"
+                                ],
+                                "type": "text/javascript",
+                                "packages": {}
+                            }
+                        }
+                    ],
+                    "auth": {},
+                    "request": {
+                        "auth": {
+                            "type": "inherit",
+                            "inherit": []
+                        },
+                        "method": "PUT",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"Updated Test Car Make\",\n    \"countryOfOrigin\": \"Updated Test Country\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "description": "",
+                                "type": "string"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/v1/carmakes/{{created_car_make_id}}",
+                            "path": [
+                                "api",
+                                "v1",
+                                "carmakes",
+                                "{{created_car_make_id}}"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json",
+                                        "description": "",
+                                        "disabled": false
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/v1/carmakes/{{created_car_make_id}}",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "carmakes",
+                                        "{{created_car_make_id}}"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"name\": \"Updated Test Car Make\",\n    \"countryOfOrigin\": \"Updated Test Country\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "cookie": []
+                        }
+                    ],
+                    "protocolProfileBehavior": {
+                        "strictSSL": false,
+                        "followRedirects": true
+                    }
+                },
+                {
+                    "name": "Delete Car Make",
+                    "description": "",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test(\"Status code is 200\", function () {",
+                                    "    pm.response.to.have.status(200);",
+                                    "});",
+                                    "",
+                                    "const responseJson = pm.response.json();",
+                                    "",
+                                    "pm.test(\"Response has success flag\", function () {",
+                                    "    pm.expect(responseJson.success).to.be.true;",
+                                    "});"
+                                ],
+                                "type": "text/javascript",
+                                "packages": {}
+                            }
+                        }
+                    ],
+                    "auth": {},
+                    "request": {
+                        "auth": {
+                            "type": "inherit",
+                            "inherit": []
+                        },
+                        "method": "DELETE",
+                        "body": {},
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/v1/carmakes/{{created_car_make_id}}",
+                            "path": [
+                                "api",
+                                "v1",
+                                "carmakes",
+                                "{{created_car_make_id}}"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "DELETE",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/v1/carmakes/{{created_car_make_id}}",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "carmakes",
+                                        "{{created_car_make_id}}"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "body": {}
+                            },
+                            "cookie": []
+                        }
+                    ],
+                    "protocolProfileBehavior": {
+                        "strictSSL": false,
+                        "followRedirects": true
+                    }
+                }
+            ],
+            "event": [
+                {
+                    "listen": "prerequest",
+                    "script": {
+                        "exec": [],
+                        "type": "text/javascript",
+                        "packages": {}
+                    }
+                },
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [],
+                        "type": "text/javascript",
+                        "packages": {}
+                    }
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": [
+                    {
+                        "key": "token",
+                        "value": "{{token}}",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Car Models",
+            "description": "",
+            "item": [
+                {
+                    "name": "Get Car Model By ID",
+                    "description": "",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test(\"Status code is 200 or 404\", function () {",
+                                    "    pm.expect(pm.response.code).to.be.oneOf([200, 404]);",
+                                    "});",
+                                    "",
+                                    "if (pm.response.code === 200) {",
+                                    "    const responseJson = pm.response.json();",
+                                    "    ",
+                                    "    pm.test(\"Response has success flag\", function () {",
+                                    "        pm.expect(responseJson.success).to.be.true;",
+                                    "    });",
+                                    "    ",
+                                    "    pm.test(\"Response contains car model data\", function () {",
+                                    "        pm.expect(responseJson.data).to.have.property('modelId');",
+                                    "        pm.expect(responseJson.data).to.have.property('name');",
+                                    "        pm.expect(responseJson.data).to.have.property('makeId');",
+                                    "    });",
+                                    "}"
+                                ],
+                                "type": "text/javascript",
+                                "packages": {}
+                            }
+                        }
+                    ],
+                    "auth": {},
+                    "request": {
+                        "auth": {},
+                        "method": "GET",
+                        "body": {},
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/v1/carmodels/{{existing_car_model_id}}",
+                            "path": [
+                                "api",
+                                "v1",
+                                "carmodels",
+                                "{{existing_car_model_id}}"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/v1/carmodels/{{existing_car_model_id}}",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "carmodels",
+                                        "{{existing_car_model_id}}"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "body": {}
+                            },
+                            "cookie": []
+                        }
+                    ],
+                    "protocolProfileBehavior": {
+                        "strictSSL": false,
+                        "followRedirects": true
+                    }
+                },
+                {
+                    "name": "Create Car Model ",
+                    "description": "",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test(\"Status code is 201\", function () {",
+                                    "    pm.response.to.have.status(201);",
+                                    "});",
+                                    "",
+                                    "const responseJson = pm.response.json();",
+                                    "",
+                                    "pm.test(\"Response has success flag\", function () {",
+                                    "    pm.expect(responseJson.success).to.be.true;",
+                                    "});",
+                                    "",
+                                    "pm.test(\"Response contains created car model\", function () {",
+                                    "    pm.expect(responseJson.data).to.have.property('modelId');",
+                                    "    pm.expect(responseJson.data).to.have.property('name');",
+                                    "    pm.expect(responseJson.data.name).to.equal('Test Model');",
+                                    "});",
+                                    "",
+                                    "// Store the created car model ID for subsequent tests",
+                                    "if (responseJson.data && responseJson.data.modelId) {",
+                                    "    pm.collectionVariables.set(\"created_car_model_id\", responseJson.data.modelId);",
+                                    "    console.log(\"Stored created car model ID: \" + responseJson.data.modelId);",
+                                    "}"
+                                ],
+                                "type": "text/javascript",
+                                "packages": {}
+                            }
+                        }
+                    ],
+                    "auth": {},
+                    "request": {
+                        "auth": {
+                            "type": "inherit",
+                            "inherit": []
+                        },
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"Test Model\",\n    \"makeId\": \"{{existing_car_make_id}}\",\n    \"modelYear\": 2024,\n    \"engine\": \"2.0L Test Engine\",\n    \"transmission\": \"Manual\",\n    \"fuelType\": \"Gasoline\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "description": "",
+                                "type": "string"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/v1/carmodels",
+                            "path": [
+                                "api",
+                                "v1",
+                                "carmodels"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json",
+                                        "description": "",
+                                        "disabled": false
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/v1/carmodels",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "carmodels"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"name\": \"Test Model\",\n    \"makeId\": \"{{existing_car_make_id}}\",\n    \"modelYear\": 2024,\n    \"engine\": \"2.0L Test Engine\",\n    \"transmission\": \"Manual\",\n    \"fuelType\": \"Gasoline\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "cookie": []
+                        }
+                    ],
+                    "protocolProfileBehavior": {
+                        "strictSSL": false,
+                        "followRedirects": true
+                    }
+                },
+                {
+                    "name": "Update Car Model",
+                    "description": "",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test(\"Status code is 200\", function () {",
+                                    "    pm.response.to.have.status(200);",
+                                    "});",
+                                    "",
+                                    "const responseJson = pm.response.json();",
+                                    "",
+                                    "pm.test(\"Response has success flag\", function () {",
+                                    "    pm.expect(responseJson.success).to.be.true;",
+                                    "});",
+                                    "",
+                                    "pm.test(\"Response contains updated car model\", function () {",
+                                    "    pm.expect(responseJson.data).to.have.property('name');",
+                                    "    pm.expect(responseJson.data.name).to.equal('Updated Test Model');",
+                                    "});"
+                                ],
+                                "type": "text/javascript",
+                                "packages": {}
+                            }
+                        }
+                    ],
+                    "auth": {},
+                    "request": {
+                        "auth": {
+                            "type": "inherit",
+                            "inherit": []
+                        },
+                        "method": "PUT",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"Updated Test Model\",\n    \"modelYear\": 2025,\n    \"engine\": \"2.5L Updated Engine\",\n    \"transmission\": \"Automatic\",\n    \"fuelType\": \"Hybrid\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "description": "",
+                                "type": "string"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/v1/carmodels/{{created_car_model_id}}",
+                            "path": [
+                                "api",
+                                "v1",
+                                "carmodels",
+                                "{{created_car_model_id}}"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json",
+                                        "description": "",
+                                        "disabled": false
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/v1/carmodels/{{created_car_model_id}}",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "carmodels",
+                                        "{{created_car_model_id}}"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"name\": \"Updated Test Model\",\n    \"modelYear\": 2025,\n    \"engine\": \"2.5L Updated Engine\",\n    \"transmission\": \"Automatic\",\n    \"fuelType\": \"Hybrid\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "cookie": []
+                        }
+                    ],
+                    "protocolProfileBehavior": {
+                        "strictSSL": false,
+                        "followRedirects": true
+                    }
+                },
+                {
+                    "name": "Delete Car Model",
+                    "description": "",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test(\"Status code is 200\", function () {",
+                                    "    pm.response.to.have.status(200);",
+                                    "});",
+                                    "",
+                                    "const responseJson = pm.response.json();",
+                                    "",
+                                    "pm.test(\"Response has success flag\", function () {",
+                                    "    pm.expect(responseJson.success).to.be.true;",
+                                    "});"
+                                ],
+                                "type": "text/javascript",
+                                "packages": {}
+                            }
+                        }
+                    ],
+                    "auth": {},
+                    "request": {
+                        "auth": {
+                            "type": "inherit",
+                            "inherit": []
+                        },
+                        "method": "DELETE",
+                        "body": {},
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/v1/carmodels/{{created_car_model_id}}",
+                            "path": [
+                                "api",
+                                "v1",
+                                "carmodels",
+                                "{{created_car_model_id}}"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "DELETE",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/v1/carmodels/{{created_car_model_id}}",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "carmodels",
+                                        "{{created_car_model_id}}"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "body": {}
+                            },
+                            "cookie": []
+                        }
+                    ],
+                    "protocolProfileBehavior": {
+                        "strictSSL": false,
+                        "followRedirects": true
+                    }
+                }
+            ],
+            "event": [
+                {
+                    "listen": "prerequest",
+                    "script": {
+                        "exec": [],
+                        "type": "text/javascript",
+                        "packages": {}
+                    }
+                },
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [],
+                        "type": "text/javascript",
+                        "packages": {}
+                    }
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": [
+                    {
+                        "key": "token",
+                        "value": "{{token}}",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Authorization Tests",
+            "description": "",
+            "item": [
+                {
+                    "name": "Try Create Car Make (Reader - Should Fail)",
+                    "description": "",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test(\"Status code is 403 (Forbidden)\", function () {",
+                                    "    pm.response.to.have.status(403);",
+                                    "});",
+                                    "",
+                                    "const responseJson = pm.response.json();",
+                                    "",
+                                    "pm.test(\"Response indicates authorization failure\", function () {",
+                                    "    pm.expect(responseJson.success).to.be.false;",
+                                    "});"
+                                ],
+                                "type": "text/javascript",
+                                "packages": {}
+                            }
+                        }
+                    ],
+                    "auth": {},
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{reader_token}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"Unauthorized Car Make\",\n    \"countryOfOrigin\": \"Unauthorized Country\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "description": "",
+                                "type": "string"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/v1/carmakes",
+                            "path": [
+                                "api",
+                                "v1",
+                                "carmakes"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json",
+                                        "description": "",
+                                        "disabled": false
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/v1/carmakes",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "carmakes"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"name\": \"Unauthorized Car Make\",\n    \"countryOfOrigin\": \"Unauthorized Country\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "cookie": []
+                        }
+                    ],
+                    "protocolProfileBehavior": {
+                        "strictSSL": false,
+                        "followRedirects": true
+                    }
+                },
+                {
+                    "name": "Try Update Car Make (Reader - Should Fail)",
+                    "description": "",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test(\"Status code is 403 (Forbidden)\", function () {",
+                                    "    pm.response.to.have.status(403);",
+                                    "});",
+                                    "",
+                                    "const responseJson = pm.response.json();",
+                                    "",
+                                    "pm.test(\"Response indicates authorization failure\", function () {",
+                                    "    pm.expect(responseJson.success).to.be.false;",
+                                    "});"
+                                ],
+                                "type": "text/javascript",
+                                "packages": {}
+                            }
+                        }
+                    ],
+                    "auth": {},
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{reader_token}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"Unauthorized Update\",\n    \"countryOfOrigin\": \"Unauthorized Country\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "description": "",
+                                "type": "string"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/v1/carmakes/{{existing_car_make_id}}",
+                            "path": [
+                                "api",
+                                "v1",
+                                "carmakes",
+                                "{{existing_car_make_id}}"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json",
+                                        "description": "",
+                                        "disabled": false
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/v1/carmakes/{{existing_car_make_id}}",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "carmakes",
+                                        "{{existing_car_make_id}}"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"name\": \"Unauthorized Update\",\n    \"countryOfOrigin\": \"Unauthorized Country\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "cookie": []
+                        }
+                    ],
+                    "protocolProfileBehavior": {
+                        "strictSSL": false,
+                        "followRedirects": true
+                    }
+                },
+                {
+                    "name": "Try Delete Car Make (Editor - Should Fail)",
+                    "description": "",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test(\"Status code is 403 (Forbidden)\", function () {",
+                                    "    pm.response.to.have.status(403);",
+                                    "});",
+                                    "",
+                                    "const responseJson = pm.response.json();",
+                                    "",
+                                    "pm.test(\"Response indicates authorization failure\", function () {",
+                                    "    pm.expect(responseJson.success).to.be.false;",
+                                    "});"
+                                ],
+                                "type": "text/javascript",
+                                "packages": {}
+                            }
+                        }
+                    ],
+                    "auth": {},
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{editor_token}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "body": {},
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/v1/carmakes/{{existing_car_make_id}}",
+                            "path": [
+                                "api",
+                                "v1",
+                                "carmakes",
+                                "{{existing_car_make_id}}"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "DELETE",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/v1/carmakes/{{existing_car_make_id}}",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "carmakes",
+                                        "{{existing_car_make_id}}"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "body": {}
+                            },
+                            "cookie": []
+                        }
+                    ],
+                    "protocolProfileBehavior": {
+                        "strictSSL": false,
+                        "followRedirects": true
+                    }
+                }
+            ],
+            "event": [
+                {
+                    "listen": "prerequest",
+                    "script": {
+                        "exec": [],
+                        "type": "text/javascript",
+                        "packages": {}
+                    }
+                },
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [],
+                        "type": "text/javascript",
+                        "packages": {}
+                    }
+                }
+            ],
+            "auth": {}
+        },
+        {
+            "name": "Authorization Tests - No Token",
+            "description": "",
+            "item": [
+                {
+                    "name": "Try Create Car Make (No Token - Should Fail)",
+                    "description": "",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test(\"Status code is 401 (Unauthorized)\", function () {",
+                                    "    pm.response.to.have.status(401);",
+                                    "});",
+                                    "",
+                                    "const responseJson = pm.response.json();",
+                                    "",
+                                    "pm.test(\"Response indicates authentication failure\", function () {",
+                                    "    pm.expect(responseJson.success).to.be.false;",
+                                    "});"
+                                ],
+                                "type": "text/javascript",
+                                "packages": {}
+                            }
+                        }
+                    ],
+                    "auth": {},
+                    "request": {
+                        "auth": {},
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"Unauthorized Car Make\",\n    \"countryOfOrigin\": \"Unauthorized Country\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "description": "",
+                                "type": "string"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/v1/carmakes",
+                            "path": [
+                                "api",
+                                "v1",
+                                "carmakes"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json",
+                                        "description": "",
+                                        "disabled": false
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/v1/carmakes",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "carmakes"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"name\": \"Unauthorized Car Make\",\n    \"countryOfOrigin\": \"Unauthorized Country\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "cookie": []
+                        }
+                    ],
+                    "protocolProfileBehavior": {
+                        "strictSSL": false,
+                        "followRedirects": true
+                    }
+                },
+                {
+                    "name": "Try Create Car Model (No Token - Should Fail)",
+                    "description": "",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test(\"Status code is 401 (Unauthorized)\", function () {",
+                                    "    pm.response.to.have.status(401);",
+                                    "});",
+                                    "",
+                                    "const responseJson = pm.response.json();",
+                                    "",
+                                    "pm.test(\"Response indicates authentication failure\", function () {",
+                                    "    pm.expect(responseJson.success).to.be.false;",
+                                    "});"
+                                ],
+                                "type": "text/javascript",
+                                "packages": {}
+                            }
+                        }
+                    ],
+                    "auth": {},
+                    "request": {
+                        "auth": {},
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"Unauthorized Model\",\n    \"makeId\": \"{{existing_car_make_id}}\",\n    \"modelYear\": 2024,\n    \"engine\": \"Unauthorized Engine\",\n    \"transmission\": \"Manual\",\n    \"fuelType\": \"Gasoline\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "description": "",
+                                "type": "string"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/v1/carmodels",
+                            "path": [
+                                "api",
+                                "v1",
+                                "carmodels"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json",
+                                        "description": "",
+                                        "disabled": false
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/v1/carmodels",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "carmodels"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"name\": \"Unauthorized Model\",\n    \"makeId\": \"{{existing_car_make_id}}\",\n    \"modelYear\": 2024,\n    \"engine\": \"Unauthorized Engine\",\n    \"transmission\": \"Manual\",\n    \"fuelType\": \"Gasoline\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "cookie": []
+                        }
+                    ],
+                    "protocolProfileBehavior": {
+                        "strictSSL": false,
+                        "followRedirects": true
+                    }
+                }
+            ],
+            "event": [
+                {
+                    "listen": "prerequest",
+                    "script": {
+                        "exec": [],
+                        "type": "text/javascript",
+                        "packages": {}
+                    }
+                },
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [],
+                        "type": "text/javascript",
+                        "packages": {}
+                    }
+                }
+            ],
+            "auth": {
+                "type": "noauth",
+                "noauth": []
+            }
+        },
+        {
+            "name": "Error Handling Tests",
+            "description": "",
+            "item": [
+                {
+                    "name": "Get Non-Existent Car Make",
+                    "description": "",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test(\"Status code is 404 (Not Found)\", function () {",
+                                    "    pm.response.to.have.status(404);",
+                                    "});",
+                                    "",
+                                    "const responseJson = pm.response.json();",
+                                    "",
+                                    "pm.test(\"Response indicates failure\", function () {",
+                                    "    pm.expect(responseJson.success).to.be.false;",
+                                    "});",
+                                    "",
+                                    "pm.test(\"Response contains error information\", function () {",
+                                    "    pm.expect(responseJson).to.have.property('error');",
+                                    "    pm.expect(responseJson.error).to.have.property('type');",
+                                    "});"
+                                ],
+                                "type": "text/javascript",
+                                "packages": {}
+                            }
+                        }
+                    ],
+                    "auth": {},
+                    "request": {
+                        "auth": {
+                            "type": "inherit",
+                            "inherit": []
+                        },
+                        "method": "GET",
+                        "body": {},
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/v1/carmakes/00000000-0000-0000-0000-000000000000",
+                            "path": [
+                                "api",
+                                "v1",
+                                "carmakes",
+                                "00000000-0000-0000-0000-000000000000"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/v1/carmakes/00000000-0000-0000-0000-000000000000",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "carmakes",
+                                        "00000000-0000-0000-0000-000000000000"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "body": {}
+                            },
+                            "cookie": []
+                        }
+                    ],
+                    "protocolProfileBehavior": {
+                        "strictSSL": false,
+                        "followRedirects": true
+                    }
+                },
+                {
+                    "name": "Create Car Make with Invalid Data",
+                    "description": "",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test(\"Status code is 400 (Bad Request)\", function () {",
+                                    "    pm.response.to.have.status(400);",
+                                    "});",
+                                    "",
+                                    "const responseJson = pm.response.json();",
+                                    "",
+                                    "pm.test(\"Response indicates validation failure\", function () {",
+                                    "    pm.expect(responseJson.success).to.be.false;",
+                                    "});",
+                                    "",
+                                    "pm.test(\"Response contains validation error\", function () {",
+                                    "    pm.expect(responseJson).to.have.property('error');",
+                                    "    pm.expect(responseJson.error.type).to.equal('ValidationError');",
+                                    "});"
+                                ],
+                                "type": "text/javascript",
+                                "packages": {}
+                            }
+                        }
+                    ],
+                    "auth": {},
+                    "request": {
+                        "auth": {
+                            "type": "inherit",
+                            "inherit": []
+                        },
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"\",\n    \"countryOfOrigin\": \"\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "description": "",
+                                "type": "string"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/v1/carmakes",
+                            "path": [
+                                "api",
+                                "v1",
+                                "carmakes"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json",
+                                        "description": "",
+                                        "disabled": false
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/v1/carmakes",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "carmakes"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"name\": \"\",\n    \"countryOfOrigin\": \"\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "cookie": []
+                        }
+                    ],
+                    "protocolProfileBehavior": {
+                        "strictSSL": false,
+                        "followRedirects": true
+                    }
+                },
+                {
+                    "name": "Create Car Model with Invalid Car Make ID",
+                    "description": "",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test(\"Status code is 400 or 404\", function () {",
+                                    "    pm.expect(pm.response.code).to.be.oneOf([400, 404]);",
+                                    "});",
+                                    "",
+                                    "const responseJson = pm.response.json();",
+                                    "",
+                                    "pm.test(\"Response indicates failure\", function () {",
+                                    "    pm.expect(responseJson.success).to.be.false;",
+                                    "});"
+                                ],
+                                "type": "text/javascript",
+                                "packages": {}
+                            }
+                        }
+                    ],
+                    "auth": {},
+                    "request": {
+                        "auth": {
+                            "type": "inherit",
+                            "inherit": []
+                        },
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"Invalid Model\",\n    \"makeId\": \"00000000-0000-0000-0000-000000000000\",\n    \"modelYear\": 2024,\n    \"engine\": \"Test Engine\",\n    \"transmission\": \"Manual\",\n    \"fuelType\": \"Gasoline\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "description": "",
+                                "type": "string"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/v1/carmodels",
+                            "path": [
+                                "api",
+                                "v1",
+                                "carmodels"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json",
+                                        "description": "",
+                                        "disabled": false
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/v1/carmodels",
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "carmodels"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"name\": \"Invalid Model\",\n    \"makeId\": \"00000000-0000-0000-0000-000000000000\",\n    \"modelYear\": 2024,\n    \"engine\": \"Test Engine\",\n    \"transmission\": \"Manual\",\n    \"fuelType\": \"Gasoline\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "cookie": []
+                        }
+                    ],
+                    "protocolProfileBehavior": {
+                        "strictSSL": false,
+                        "followRedirects": true
+                    }
+                }
+            ],
+            "event": [
+                {
+                    "listen": "prerequest",
+                    "script": {
+                        "exec": [],
+                        "type": "text/javascript",
+                        "packages": {}
+                    }
+                },
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [],
+                        "type": "text/javascript",
+                        "packages": {}
+                    }
+                }
+            ],
+            "auth": {}
+        }
+    ],
+    "variable": [],
+    "event": [],
+    "auth": {}
+}
