@@ -92,6 +92,7 @@ Postman collections are available in the `/postman` folder:
 - Includes XML documentation comments
 
 ## Planned Improvements
+- **Containerization**: Isolation and portability improvement (including integration test runs)
 - **Real Authentication**: Identity Server or Azure AD integration
 - **Caching**: Redis with cache tags and distributed invalidation
 - **Database Scaling**: Read replicas and query optimization
