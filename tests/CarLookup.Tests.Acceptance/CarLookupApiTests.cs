@@ -138,8 +138,8 @@ public class CarLookupApiTests : IClassFixture<WebApplicationFactory<CarLookup.H
         result.Pagination.Should().NotBeNull();
         result.Pagination!.CurrentPage.Should().Be(1);
         result.Pagination.Limit.Should().Be(5);
-        result.Pagination.TotalItems.Should().BeGreaterOrEqualTo(0);
-        result.Pagination.TotalPages.Should().BeGreaterOrEqualTo(0);
+        result.Pagination.TotalItems.Should().BeGreaterThanOrEqualTo(0);
+        result.Pagination.TotalPages.Should().BeGreaterThanOrEqualTo(0);
     }
 
     /// <summary>
