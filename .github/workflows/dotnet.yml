@@ -50,8 +50,9 @@ jobs:
     - name: Run Unit Tests
       run: dotnet test tests/CarLookup.Tests.Unit/CarLookup.Tests.Unit.csproj --no-build --configuration Release --verbosity normal --logger trx --results-directory TestResults/Unit
 
-    - name: Run Integration Tests
-      run: dotnet test tests/CarLookup.Tests.Integration/CarLookup.Tests.Integration.csproj --no-build --configuration Release --verbosity normal --logger trx --results-directory TestResults/Integration
+    # TODO: Adapt Integration Tests to run on Github Actions pipeline
+    #- name: Run Integration Tests
+    #  run: dotnet test tests/CarLookup.Tests.Integration/CarLookup.Tests.Integration.csproj --no-build --configuration Release --verbosity normal --logger trx --results-directory TestResults/Integration
 
     - name: Run Acceptance Tests
       run: dotnet test tests/CarLookup.Tests.Acceptance/CarLookup.Tests.Acceptance.csproj --no-build --configuration Release --verbosity normal --logger trx --results-directory TestResults/Acceptance
