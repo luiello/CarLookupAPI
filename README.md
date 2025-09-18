@@ -95,14 +95,6 @@ Postman collections are available in the `/postman` folder:
 - Uses comprehensive exception handling with custom middleware
 - Includes XML documentation comments
 
-## Planned Improvements
-- **Containerization**: Isolation and portability improvement (including integration test runs)
-- **Real Authentication**: Identity Server or Azure AD integration
-- **Caching**: Redis with cache tags and distributed invalidation
-- **Database Scaling**: Read replicas and query optimization
-- **Monitoring**: Application Performance Monitoring (APM)
-- **Soft Deletes**: Audit trail with soft delete implementation
-
 ## Architecture
 
 ```mermaid
@@ -121,3 +113,13 @@ graph TD
     F --> G["Database"]
 
 ```
+
+---
+
+## Planned Improvements
+- **Containerization**: Isolation and portability improvement (including integration test runs)
+- **Real Authentication**: Identity Server or Azure AD integration
+- **Caching**: Redis with cache tags and distributed invalidation
+- **Database Scaling**: Read replicas and query optimization
+- **Monitoring**: Application Performance Monitoring (APM)
+- **Soft Deletes**: Audit trail with soft delete implementation
