@@ -1,5 +1,7 @@
 # CarLookup API
 
+[![.NET](https://github.com/luiello/CarLookupAPI/actions/workflows/dotnet.yml/badge.svg)](https://github.com/luiello/CarLookupAPI/actions/workflows/dotnet.yml)
+
 ## Overview
 CarLookup is a RESTful API for managing and querying car makes and models.
 
@@ -66,11 +68,46 @@ The API uses JWT Bearer token authentication. Tokens can be obtained from the `/
 - **Editor**: Can read all data and create/update makes and models
 - **Reader**: Read-only access to all data
 
+## Testing
+The project includes testing:
+- **Unit Tests**: Fast, isolated component testing
+- **Integration Tests**: Database integration with SQL Server containers
+- **Acceptance Tests**: End-to-end API workflow testing
+
 To run tests:
 ```
 dotnet test
 ```
+### Postman Testing
+Ready-to-use Postman collections are available in the `/postman` folder:
 
+- **`CarLookupAPI.postman_collection.json`** - Complete API test collection with automated testing scripts
+- **`Develop Env.postman_environment.json`** - Development environment configuration (localhost:57484)
+
+```
+.
+└── CarLookup API - Test Collection/
+    ├── Authentication/
+    │   ├── Login endpoints for Admin, Editor, and Reader roles
+    │   ├── Invalid credential testing
+    │   └── Automatic token storage and management
+    ├── Car Makes/
+    │   ├── Full CRUD operations (Create, Read, Update, Delete)
+    │   ├── Pagination and filtering examples
+    │   └── Get car models by make ID
+    ├── Car Models/
+    │   ├── Complete car model management
+    │   └── CRUD operations with validation testing
+    ├── Authorization Tests/
+    │   ├── Role-based access control verification
+    │   ├── Unauthorized access scenarios
+    │   └── Permission boundary testing
+    └── Error Handling Tests/
+        ├── Non-existent resource handling (404 errors)
+        ├── Invalid data validation (400 errors)
+        └── Comprehensive error response testing
+```
+  
 ## Code Style
 - Uses modern C# 13 features
 - Follows SOLID principles
