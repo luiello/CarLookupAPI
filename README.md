@@ -19,7 +19,7 @@ The API provides comprehensive endpoints for CRUD operations on car makes and mo
 ### Setup Instructions
 1. Clone the repository:
 ```
-git clone https://github.com/yourusername/carlookup.git
+git clone https://github.com/luiello/CarLookupAPI.git
 cd carlookup
 ```
 
