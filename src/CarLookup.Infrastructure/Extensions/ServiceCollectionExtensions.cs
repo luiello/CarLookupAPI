@@ -112,7 +112,6 @@ public static class ServiceCollectionExtensions
                 Contact = new OpenApiContact
                 {
                     Name = "CarLookup API by luiello",
-                    Email = "luiello@gmail.com",
                     Url = new Uri("https://github.com/luiello")
                 }
             });
