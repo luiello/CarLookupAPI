@@ -79,34 +79,10 @@ To run tests:
 dotnet test
 ```
 ### Postman Testing
-Ready-to-use Postman collections are available in the `/postman` folder:
+Postman collections are available in the `/postman` folder:
 
 - **`CarLookupAPI.postman_collection.json`** - Complete API test collection with automated testing scripts
 - **`Develop Env.postman_environment.json`** - Development environment configuration (localhost:57484)
-
-```
-.
-└── CarLookup API - Test Collection/
-    ├── Authentication/
-    │   ├── Login endpoints for Admin, Editor, and Reader roles
-    │   ├── Invalid credential testing
-    │   └── Automatic token storage and management
-    ├── Car Makes/
-    │   ├── Full CRUD operations (Create, Read, Update, Delete)
-    │   ├── Pagination and filtering examples
-    │   └── Get car models by make ID
-    ├── Car Models/
-    │   ├── Complete car model management
-    │   └── CRUD operations with validation testing
-    ├── Authorization Tests/
-    │   ├── Role-based access control verification
-    │   ├── Unauthorized access scenarios
-    │   └── Permission boundary testing
-    └── Error Handling Tests/
-        ├── Non-existent resource handling (404 errors)
-        ├── Invalid data validation (400 errors)
-        └── Comprehensive error response testing
-```
   
 ## Code Style
 - Uses modern C# 13 features
