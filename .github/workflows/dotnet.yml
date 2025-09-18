@@ -5,24 +5,78 @@ name: .NET
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "master", "main" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "master", "main" ]
+
+env:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: ['9.0.x']
+        # Future versions can be added here: ['9.0.x', '10.0.x']
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.x
+        dotnet-version: ${{ matrix.dotnet-version }}
+
+    - name: Cache NuGet packages
+      uses: actions/cache@v4
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', '**/*.fsproj', '**/*.vbproj') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+
     - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet restore --verbosity minimal
+
+    - name: Build solution
+      run: dotnet build --no-restore --configuration Release --verbosity minimal
+
+    - name: Run Unit Tests
+      run: dotnet test tests/CarLookup.Tests.Unit/CarLookup.Tests.Unit.csproj --no-build --configuration Release --verbosity normal --logger trx --results-directory TestResults/Unit
+
+    # TODO: Improve solution to run Integration Tests on Github Actions pipeline
+    #- name: Run Integration Tests
+    #  run: dotnet test tests/CarLookup.Tests.Integration/CarLookup.Tests.Integration.csproj --no-build --configuration Release --verbosity normal --logger trx --results-directory TestResults/Integration
+
+    # TODO: Improve solution to run Acceptance Tests on Github Actions pipeline
+    #- name: Run Acceptance Tests
+    #  run: dotnet test tests/CarLookup.Tests.Acceptance/CarLookup.Tests.Acceptance.csproj --no-build --configuration Release --verbosity normal --logger trx --results-directory TestResults/Acceptance
+    
+  security-scan:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore --verbosity minimal
+
+    - name: Run security audit
+      run: dotnet list package --vulnerable --include-transitive || true
+
+    - name: Check for outdated packages
+      run: dotnet list package --outdated || true
