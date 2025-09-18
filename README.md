@@ -1,5 +1,7 @@
 # CarLookup API
 
+[![.NET](https://github.com/luiello/CarLookupAPI/actions/workflows/dotnet.yml/badge.svg)](https://github.com/luiello/CarLookupAPI/actions/workflows/dotnet.yml)
+
 ## Overview
 CarLookup is a RESTful API for managing and querying car makes and models.
 
@@ -17,7 +19,7 @@ The API provides comprehensive endpoints for CRUD operations on car makes and mo
 ### Setup Instructions
 1. Clone the repository:
 ```
-git clone https://github.com/yourusername/carlookup.git
+git clone https://github.com/luiello/CarLookupAPI.git
 cd carlookup
 ```
 
@@ -66,11 +68,22 @@ The API uses JWT Bearer token authentication. Tokens can be obtained from the `/
 - **Editor**: Can read all data and create/update makes and models
 - **Reader**: Read-only access to all data
 
+## Testing
+The project includes testing:
+- **Unit Tests**: Fast, isolated component testing
+- **Integration Tests**: Database integration with SQL Server containers
+- **Acceptance Tests**: End-to-end API workflow testing
+
 To run tests:
 ```
 dotnet test
 ```
+### Postman Testing
+Postman collections are available in the `/postman` folder:
 
+- **`CarLookupAPI.postman_collection.json`** - Complete API test collection with automated testing scripts
+- **`Develop Env.postman_environment.json`** - Development environment configuration (localhost:57484)
+  
 ## Code Style
 - Uses modern C# 13 features
 - Follows SOLID principles
@@ -79,6 +92,7 @@ dotnet test
 - Includes XML documentation comments
 
 ## Planned Improvements
+- **Containerization**: Isolation and portability improvement (including integration test runs)
 - **Real Authentication**: Identity Server or Azure AD integration
 - **Caching**: Redis with cache tags and distributed invalidation
 - **Database Scaling**: Read replicas and query optimization
