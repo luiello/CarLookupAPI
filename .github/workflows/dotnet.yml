@@ -64,7 +64,6 @@ jobs:
       with:
         files: TestResults/**/*.trx
         check_name: "Test Results (.NET ${{ matrix.dotnet-version }})"
-        comment_mode: create new
         fail_on: "test failures"
 
     - name: Upload test results
