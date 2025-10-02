@@ -14,7 +14,6 @@ The API provides comprehensive endpoints for CRUD operations on car makes and mo
 ### Prerequisites
 - [.NET 9 SDK](https://dotnet.microsoft.com/download)
 - [SQL Server](https://www.microsoft.com/sql-server) (LocalDB or Express works for development)
-- [Visual Studio 2022](https://visualstudio.microsoft.com/) or another IDE of your choice
 
 ### Setup Instructions
 1. Clone the repository:
