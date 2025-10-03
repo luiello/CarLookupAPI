@@ -366,3 +366,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/tests/CodeCoverage.runsettings
+/tests/Directory.Build.props
+/tests/Directory.Build.targets
+/tests/finecodecoverage-settings.json
