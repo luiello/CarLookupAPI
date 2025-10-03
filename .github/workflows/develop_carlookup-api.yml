@@ -61,7 +61,7 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'carlookup-api'
-          slot-name: 'Development'
+          slot-name: 'Production'
           app-settings-json: |
             [
               {
@@ -71,7 +71,7 @@ jobs:
               },
               {
                 "name": "ASPNETCORE_ENVIRONMENT",
-                "value": "Development",
+                "value": "Production",
                 "slotSetting": false
               },
               {
@@ -81,3 +81,4 @@ jobs:
               }
             ]          
           package: .
+
