@@ -38,6 +38,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
+    environment: production # Optional: Use GitHub environments for additional security
     permissions:
       id-token: write #This is required for requesting the JWT
       contents: read #This is required for actions/checkout
@@ -55,6 +56,13 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_A93C549C943144FCB4FB6F8E2CC0E21F }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_BE1D2DD6B8724705A250E027148A979C }}
 
+      - name: Configure MySQL Connection String
+        run: |
+          # Build the secure connection string using GitHub secrets
+          CONNECTION_STRING="Server=${{ secrets.MYSQL_SERVER }};Port=${{ secrets.MYSQL_PORT }};Database=${{ secrets.MYSQL_DATABASE }};Uid=${{ secrets.MYSQL_USERNAME }};Pwd=${{ secrets.MYSQL_PASSWORD }};CharSet=utf8mb4;SslMode=Required;AllowPublicKeyRetrieval=True"
+          echo "::add-mask::$CONNECTION_STRING"
+          echo "MYSQL_CONNECTION_STRING=$CONNECTION_STRING" >> $GITHUB_ENV
+
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
@@ -62,4 +70,47 @@ jobs:
           app-name: 'carlookup-api'
           slot-name: 'Production'
           package: .
-          
+
+      - name: Configure Azure App Settings
+        uses: azure/appservice-settings@v1
+        with:
+          app-name: 'carlookup-api'
+          slot-name: 'Production'
+          app-settings-json: |
+            [
+              {
+                "name": "ConnectionStrings__Default",
+                "value": "${{ env.MYSQL_CONNECTION_STRING }}",
+                "slotSetting": false
+              },
+              {
+                "name": "ASPNETCORE_ENVIRONMENT",
+                "value": "Production",
+                "slotSetting": false
+              },
+              {
+                "name": "Data__SeedOnStartup",
+                "value": "false",
+                "slotSetting": false
+              },
+              {
+                "name": "Jwt__Key",
+                "value": "${{ secrets.JWT_SECRET_KEY }}",
+                "slotSetting": false
+              },
+              {
+                "name": "Jwt__Issuer",
+                "value": "CarLookup",
+                "slotSetting": false
+              },
+              {
+                "name": "Jwt__Audience",
+                "value": "CarLookupClients",
+                "slotSetting": false
+              },
+              {
+                "name": "Jwt__ExpirationMinutes",
+                "value": "60",
+                "slotSetting": false
+              }
+            ]
