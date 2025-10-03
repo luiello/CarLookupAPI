@@ -62,23 +62,6 @@ jobs:
         with:
           app-name: 'carlookup-api'
           slot-name: 'Production'
-          app-settings-json: |
-            [
-              {
-                "name": "ConnectionStrings__Default",
-                "value": "${{ env.MYSQL_CONNECTION_STRING }}",
-                "slotSetting": false
-              },
-              {
-                "name": "ASPNETCORE_ENVIRONMENT",
-                "value": "Production",
-                "slotSetting": false
-              },
-              {
-                "name": "Data__SeedOnStartup",
-                "value": "true",
-                "slotSetting": false
-              }
-            ]          
           package: .
+
 
