@@ -18,20 +18,29 @@ public class CarModelConfiguration : IEntityTypeConfiguration<CarModel>
 
         builder.Property(cm => cm.ModelId)
             .IsRequired()
-            .ValueGeneratedNever();
+            .ValueGeneratedNever()
+            .HasColumnType("char(36)"); // MySQL GUID format
 
         builder.Property(cm => cm.MakeId)
-            .IsRequired();
+            .IsRequired()
+            .HasColumnType("char(36)");
 
         builder.Property(cm => cm.Name)
             .IsRequired()
-            .HasMaxLength(120);
+            .HasMaxLength(120)
+            .HasColumnType("varchar(120)")
+            .UseCollation("utf8mb4_unicode_ci");
 
         builder.Property(cm => cm.ModelYear)
-            .IsRequired();
+            .IsRequired()
+            .HasColumnType("int");
 
         builder.Property(cm => cm.CreatedAt)
-            .IsRequired();
+            .IsRequired()
+            .HasColumnType("datetime(6)");
+
+        builder.Property(cm => cm.UpdatedAt)
+            .HasColumnType("datetime(6)");
 
         // UK: Car Make Id, Model name and year
         builder.HasIndex(cm => new { cm.MakeId, cm.Name, cm.ModelYear })

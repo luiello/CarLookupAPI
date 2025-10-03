@@ -370,3 +370,4 @@ FodyWeavers.xsd
 /tests/Directory.Build.props
 /tests/Directory.Build.targets
 /tests/finecodecoverage-settings.json
+/scripts

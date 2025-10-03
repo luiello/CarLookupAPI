@@ -16,6 +16,14 @@ public class UserRoleConfiguration : IEntityTypeConfiguration<UserRole>
         // PK
         builder.HasKey(ur => new { ur.UserId, ur.RoleId });
 
+        builder.Property(ur => ur.UserId)
+            .IsRequired()
+            .HasColumnType("char(36)");
+
+        builder.Property(ur => ur.RoleId)
+            .IsRequired()
+            .HasColumnType("char(36)");
+
         // FK: UserRoles belongs to one User
         builder.HasOne(ur => ur.User)
             .WithMany(u => u.UserRoles)
@@ -29,6 +37,7 @@ public class UserRoleConfiguration : IEntityTypeConfiguration<UserRole>
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.Property(ur => ur.AssignedAt)
-            .IsRequired();
+            .IsRequired()
+            .HasColumnType("datetime(6)");
     }
 }

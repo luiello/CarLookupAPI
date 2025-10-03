@@ -18,18 +18,27 @@ public class CarMakeConfiguration : IEntityTypeConfiguration<CarMake>
 
         builder.Property(cm => cm.MakeId)
             .IsRequired()
-            .ValueGeneratedNever();
+            .ValueGeneratedNever()
+            .HasColumnType("char(36)"); // MySQL GUID format
 
         builder.Property(cm => cm.Name)
             .IsRequired()
-            .HasMaxLength(100);
+            .HasMaxLength(100)
+            .HasColumnType("varchar(100)")
+            .UseCollation("utf8mb4_unicode_ci"); // Case-insensitive Unicode collation
 
         builder.Property(cm => cm.CountryOfOrigin)
             .IsRequired()
-            .HasMaxLength(100);
+            .HasMaxLength(100)
+            .HasColumnType("varchar(100)")
+            .UseCollation("utf8mb4_unicode_ci");
 
         builder.Property(cm => cm.CreatedAt)
-            .IsRequired();
+            .IsRequired()
+            .HasColumnType("datetime(6)"); // MySQL datetime with microsecond precision
+
+        builder.Property(cm => cm.UpdatedAt)
+            .HasColumnType("datetime(6)");
 
         // UK: Car Make name
         builder.HasIndex(cm => cm.Name)

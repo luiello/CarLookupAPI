@@ -164,16 +164,19 @@ public static class ServiceCollectionExtensions
 
         builder.Services.AddDbContext<CarLookupDbContext>(options =>
         {
-            options.UseSqlServer(connectionString, sqlOptions =>
+            options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), mySqlOptions =>
             {
-                // Retry strategy
-                sqlOptions.EnableRetryOnFailure(
+                // Retry strategy for MySQL
+                mySqlOptions.EnableRetryOnFailure(
                     maxRetryCount: 3,
                     maxRetryDelay: TimeSpan.FromSeconds(5),
                     errorNumbersToAdd: null);
                 
-                // Timeout
-                sqlOptions.CommandTimeout(30);
+                // Command timeout
+                mySqlOptions.CommandTimeout(30);
+
+                // MySQL-specific options for better performance and compatibility
+                mySqlOptions.SchemaBehavior(Pomelo.EntityFrameworkCore.MySql.Infrastructure.MySqlSchemaBehavior.Ignore);
             });
 
             if (builder.Environment.IsDevelopment())

@@ -37,6 +37,10 @@ public class CarLookupDbContext : DbContext
         modelBuilder.ApplyConfiguration(new RoleConfiguration());
         modelBuilder.ApplyConfiguration(new UserRoleConfiguration());
 
+        // MySQL-specific configurations
+        modelBuilder.HasCharSet("utf8mb4");
+        modelBuilder.UseCollation("utf8mb4_unicode_ci");
+
         _logger.LogDebug("Entity model configurations applied successfully");
     }
 

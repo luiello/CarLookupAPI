@@ -13,7 +13,7 @@ The API provides comprehensive endpoints for CRUD operations on car makes and mo
 
 ### Prerequisites
 - [.NET 9 SDK](https://dotnet.microsoft.com/download)
-- [SQL Server](https://www.microsoft.com/sql-server) (LocalDB or Express works for development)
+- [MySQL Server](https://dev.mysql.com/downloads/mysql/) 8.0 or higher
 - [Visual Studio 2022](https://visualstudio.microsoft.com/) or another IDE of your choice
 
 ### Setup Instructions
@@ -23,23 +23,41 @@ git clone https://github.com/luiello/CarLookupAPI.git
 cd carlookup
 ```
 
-2. Restore dependencies:
+2. Install and configure MySQL:
+   - Install MySQL Server 8.0+
+   - Run the setup script: `scripts/setup-mysql.sql`
+   - Or create the database manually:
+   ```sql
+   CREATE DATABASE CarLookupDb CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+   CREATE USER 'carlookup_user'@'localhost' IDENTIFIED BY 'CarLookup2024!';
+   GRANT ALL PRIVILEGES ON CarLookupDb.* TO 'carlookup_user'@'localhost';
+   ```
+
+3. Restore dependencies:
 ```
 dotnet restore
 ```
 
-3. Configure connection string in `appsettings.json` or using user secrets:
+4. Configure connection string in `appsettings.json` or using user secrets:
 ```
-dotnet user-secrets set "ConnectionStrings:Default" "Server=(localdb)\\mssqllocaldb;Database=CarLookupDb;Trusted_Connection=True;"
+dotnet user-secrets set "ConnectionStrings:Default" "Server=localhost;Port=3306;Database=CarLookupDb;Uid=carlookup_user;Pwd=CarLookup2024!;CharSet=utf8mb4;SslMode=None;" --project src/CarLookup.Host
 ```
 
-4. Run the application:
+5. Create and run migrations:
+```
+dotnet ef migrations add InitialMySqlMigration --project src/CarLookup.Access --startup-project src/CarLookup.Host
+dotnet ef database update --project src/CarLookup.Access --startup-project src/CarLookup.Host
+```
+
+6. Run the application:
 ```
 dotnet run --project src/CarLookup.Host/CarLookup.Host.csproj
 ```
 
 ### Database Setup
 The database is automatically created and seeded with sample data during development when the application starts. This behavior is controlled by the `Data:SeedOnStartup` setting in your configuration (defaults to `true` in development).
+
+**Important:** The application now uses MySQL instead of SQL Server. Make sure your MySQL server is running and accessible.
 
 ## API Endpoints
 
@@ -71,7 +89,7 @@ The API uses JWT Bearer token authentication. Tokens can be obtained from the `/
 ## Testing
 The project includes testing:
 - **Unit Tests**: Fast, isolated component testing
-- **Integration Tests**: Database integration with SQL Server containers
+- **Integration Tests**: Database integration with MySQL containers
 - **Acceptance Tests**: End-to-end API workflow testing
 
 To run tests:
@@ -91,8 +109,20 @@ Postman collections are available in the `/postman` folder:
 - Uses comprehensive exception handling with custom middleware
 - Includes XML documentation comments
 
+## Database Migration Notes
+
+### MySQL-Specific Considerations
+- **Character Set**: Uses `utf8mb4` for full Unicode support
+- **Collation**: Uses `utf8mb4_unicode_ci` for case-insensitive searches
+- **GUIDs**: Stored as `char(36)` for optimal performance
+- **DateTime**: Uses `datetime(6)` for microsecond precision
+- **Boolean**: Uses `tinyint(1)` for MySQL compatibility
+
+### Migration Commands
+See `scripts/mysql-migration-commands.ps1` for helpful EF Core commands.
+
 ## Planned Improvements
-- **Containerization**: Isolation and portability improvement (including integration test runs)
+- **Containerization**: Docker support with MySQL containers
 - **Real Authentication**: Identity Server or Azure AD integration
 - **Caching**: Redis with cache tags and distributed invalidation
 - **Database Scaling**: Read replicas and query optimization
@@ -114,6 +144,4 @@ graph TD
     C --> D
     B --> F["CarLookup.Access<br>(Data Access)"]
     F --> D
-    F --> G["Database"]
-
-```
+    F --> G["MySQL Database"]
