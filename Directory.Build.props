@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  
+  <!-- Common properties for all projects -->
+  <PropertyGroup>
+    <LangVersion>13.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+  </PropertyGroup>
+  
+  <!-- Code Coverage Configuration for Test Projects -->
+  <PropertyGroup Condition="'$(IsTestProject)' == 'true'">
+    <!-- Enable deterministic source paths for coverage -->
+    <DeterministicSourcePaths>true</DeterministicSourcePaths>
+    
+    <!-- Fine Code Coverage settings -->
+    <VSTestCollect>XPlat Code Coverage</VSTestCollect>
+    <CoverletOutputFormat>cobertura,opencover</CoverletOutputFormat>
+    <CoverletOutput>$(OutputPath)coverage/</CoverletOutput>
+    
+    <!-- Ensure coverage data is generated in a consistent location -->
+    <CollectCoverage>true</CollectCoverage>
+    <CoverletOutputFormat>cobertura,opencover,json,lcov</CoverletOutputFormat>
+    <MergeWith>$(OutputPath)coverage/coverage.json</MergeWith>
+    <ThresholdType>line,branch,method</ThresholdType>
+    
+    <!-- Configure coverage exclusions -->
+    <Exclude>[*]*.Program,[*]*.Startup,[*.Tests*]*,[*.TestData]*</Exclude>
+    <ExcludeByAttribute>Obsolete,GeneratedCodeAttribute,CompilerGeneratedAttribute</ExcludeByAttribute>
+    <ExcludeByFile>**/Migrations/**/*.cs</ExcludeByFile>
+  </PropertyGroup>
+
+</Project>

@@ -1,0 +1,88 @@
+{
+  "enabled": true,
+  "initializeTimeout": 30000,
+  "instrumentModulesOnly": true,
+  "watchHangup": true,
+  "watchTimeout": 5000,
+  "clearWatched": true,
+  "collectOnBuild": true,
+  "includeTestAssembly": false,
+  "excludeAssemblies": [
+    "*.Tests",
+    "*.TestData",
+    "xunit.*",
+    "Microsoft.*",
+    "System.*",
+    "FluentAssertions.*",
+    "Moq.*"
+  ],
+  "includeAssemblies": [
+    "CarLookup.*"
+  ],
+  "excludeDirectories": [
+    "bin",
+    "obj",
+    "packages",
+    "TestResults",
+    "Migrations"
+  ],
+  "includeDirectories": [
+    "src"
+  ],
+  "exclude": [
+    "[*]*.Program",
+    "[*]*.Startup",
+    "[*.Tests*]*",
+    "[*.TestData]*",
+    "[*]*Migration*",
+    "[*]*Seed*"
+  ],
+  "include": [
+    "[CarLookup.*]*"
+  ],
+  "excludeByFile": [
+    "**/Migrations/**/*.cs",
+    "**/Seed/**/*.cs"
+  ],
+  "excludeByAttribute": [
+    "Obsolete",
+    "GeneratedCodeAttribute", 
+    "CompilerGeneratedAttribute",
+    "ExcludeFromCodeCoverageAttribute"
+  ],
+  "msCodeCoverageExe": "",
+  "coverageFormats": [
+    "cobertura",
+    "opencover"
+  ],
+  "threshold": {
+    "line": 0,
+    "branch": 0,
+    "method": 0
+  },
+  "darkMode": {
+    "enabled": "System"
+  },
+  "showCoverageInGlyph": true,
+  "showLineCoverageHighlighting": true,
+  "showBranchCoverageHighlighting": true,
+  "showCoveredRegions": true,
+  "showUncoveredRegions": true,
+  "showPartiallyCoveredRegions": true,
+  "editorCoverageColouringMode": "DoNotUse",
+  "namespacedClasses": true,
+  "hideFullyCovered": false,
+  "hideSkipped": true,
+  "showRiskHotspots": true,
+  "runInParallel": false,
+  "runWhenTestsExceed": 5000,
+  "runMsCodeCoverage": true,
+  "openCoverCustomization": {
+    "customiseHPCExcludeDirectories": false,
+    "customiseHPCExcludeFiles": false,
+    "customiseHPCIncludeDirectories": false,
+    "hpcExcludeDirectories": [],
+    "hpcExcludeFiles": [],
+    "hpcIncludeDirectories": []
+  }
+}

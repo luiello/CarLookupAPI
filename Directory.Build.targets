@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  
+  <!-- Coverage targets for test projects -->
+  <Target Name="ConfigureCoverageForFineCodeCoverage" BeforeTargets="Build" Condition="'$(IsTestProject)' == 'true'">
+    <PropertyGroup>
+      <!-- Ensure consistent coverage output path -->
+      <CoverageOutputPath>$(OutputPath)coverage\</CoverageOutputPath>
+    </PropertyGroup>
+    
+    <!-- Create coverage output directory -->
+    <MakeDir Directories="$(CoverageOutputPath)" Condition="!Exists('$(CoverageOutputPath)')" />
+  </Target>
+
+  <!-- VSTest configuration for test projects -->
+  <PropertyGroup Condition="'$(IsTestProject)' == 'true'">
+    <!-- Use the common runsettings file -->
+    <RunSettingsFilePath>$(MSBuildThisFileDirectory)CodeCoverage.runsettings</RunSettingsFilePath>
+    
+    <!-- Configure VSTest to use coverage -->
+    <VSTestCollect>XPlat Code Coverage</VSTestCollect>
+    <VSTestBlameCollect>XPlat Code Coverage</VSTestBlameCollect>
+    
+    <!-- Ensure test results are in a predictable location -->
+    <VSTestResultsDirectory>$(OutputPath)TestResults</VSTestResultsDirectory>
+  </PropertyGroup>
+
+  <!-- Additional coverlet configuration for MSBuild integration -->
+  <PropertyGroup Condition="'$(IsTestProject)' == 'true' AND '$(CollectCoverage)' == 'true'">
+    <CoverletReportMerging>true</CoverletReportMerging>
+    <CoverletOutputFormat>cobertura,opencover,json,lcov</CoverletOutputFormat>
+    <CoverletOutput>$(OutputPath)coverage\$(MSBuildProjectName)</CoverletOutput>
+  </PropertyGroup>
+
+</Project>

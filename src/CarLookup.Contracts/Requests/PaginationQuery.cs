@@ -18,7 +18,7 @@ public class PaginationQuery
     /// <summary>
     /// Filter by name containing this value
     /// </summary>
-    public string NameContains { get; set; }
+    public string? NameContains { get; set; }
 
     public override string ToString()
     {
